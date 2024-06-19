@@ -10,8 +10,9 @@ Simulation::Simulation(){
 
 void Simulation::Initialize(){
      for (int i = 0; i < NUM_BODIES; i++) {
-        // bodies[i].position = {(float)GetRandomValue(100, 700), (float)GetRandomValue(100, 500)};
-        bodies[i].position = {(float)GetRandomValue(300, 500), (float)GetRandomValue(200, 400)};
+        bodies[i].position = {(float)GetRandomValue(0.2*screenWidth, 0.8*screenWidth), 
+                              (float)GetRandomValue(0.2*screenHeight, 0.8*screenHeight)};
+        // bodies[i].position = {(float)GetRandomValue(300, 500), (float)GetRandomValue(200, 400)};
         bodies[i].velocity = {0, 0};
         bodies[i].acceleration = {0, 0};
         // bodies[i].mass = GetRandomValue(1, 100) * 10e10;
@@ -28,7 +29,7 @@ void Simulation::Run(float deltaTime){
 
 void Simulation::DrawBodies(){
     for (int i = 0; i < NUM_BODIES; i++) {
-        DrawCircleV(bodies[i].position, 1, bodyColor);
+        DrawCircleV(bodies[i].position, 0.9, bodyColor);
     }
 }
 
