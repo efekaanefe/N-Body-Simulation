@@ -4,7 +4,7 @@
 int main()
 {
     InitWindow(screenWidth, screenHeight, "2D N-Body Simulation");
-    SetTargetFPS(75);
+    // SetTargetFPS(75);
 
     Simulation sim = Simulation(); 
 
@@ -15,7 +15,7 @@ int main()
         BeginDrawing();
         ClearBackground(backgroundColor);
 
-            sim.Run(deltaTime*10);
+            sim.Run(deltaTime);
 
         EndDrawing();
     }

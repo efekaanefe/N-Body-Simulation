@@ -4,7 +4,6 @@
 class Body
 {
 public:
-    // Body();
     float mass;
-    Vector2 position, velocity;
+    Vector2 position, velocity, acceleration;
 };

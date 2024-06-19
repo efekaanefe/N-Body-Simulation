@@ -5,12 +5,12 @@
 
 const int screenWidth = 800;
 const int screenHeight = 600;
-const Color backgroundColor = WHITE;
-const Color bodyColor = RED;
+const Color backgroundColor = BLACK;
+const Color bodyColor = WHITE;
 
 // simulation
-const int NUM_BODIES = 100;
+const int NUM_BODIES = 2000;
 const float G = 6.67430e-11;
-
+const float MIN_DISTANCE = 0.01;
 
 #endif
