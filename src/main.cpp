@@ -1,24 +1,16 @@
 #include <raylib.h>
-#include "ball.h"
+#include "simulation.h"
 
 int main()
 {
-    Color darkGreen = Color{20, 160, 133, 255};
-
-    const int screenWidth = 800;
-    const int screenHeight = 600;
-
-    Ball ball = Ball();
-
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
-    SetTargetFPS(60);
+    InitWindow(screenWidth, screenHeight, "2D N-Body Simulation");
+    SetTargetFPS(75);
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(darkGreen);
-        ball.Update();
-        ball.Draw();
+        ClearBackground(backgroundColor);
+
         EndDrawing();
     }
 
