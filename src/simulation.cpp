@@ -13,6 +13,7 @@ void Simulation::Initialize(){
         // bodies[i].position = {(float)GetRandomValue(100, 700), (float)GetRandomValue(100, 500)};
         bodies[i].position = {(float)GetRandomValue(300, 500), (float)GetRandomValue(200, 400)};
         bodies[i].velocity = {0, 0};
+        bodies[i].acceleration = {0, 0};
         // bodies[i].mass = GetRandomValue(1, 100) * 10e10;
         bodies[i].mass = 1 * 10e10;
     }
@@ -34,30 +35,19 @@ void Simulation::DrawBodies(){
 void Simulation::UpdateBodies(float deltaTime){
 
     // ---------    OPTIMIZATION     ---------
-    // for (int i = 0; i < NUM_BODIES; i++) {
-    //     float m1 = bodies[i].mass;
-    //     for (int j = i+1; j < NUM_BODIES; j++) {
-    //         Vector2 force = CalculateForce(bodies[i], bodies[j]);
-    //         bodies[i].acceleration = Vector2Add(bodies[i].acceleration, Vector2Scale(force, 1.0f/m1));
-    //         bodies[j].acceleration = Vector2Add(bodies[j].acceleration, Vector2Scale(force, -1.0f/bodies[j].mass));
-    //     }
-    // }
+    for (int i = 0; i < NUM_BODIES; i++) {
+        float m1 = bodies[i].mass;
+        for (int j = i+1; j < NUM_BODIES; j++) {
+            Vector2 force = CalculateForce(bodies[i], bodies[j]);
 
-    // for (int i = 0; i < NUM_BODIES; i++) {
-    //     bodies[i].velocity = Vector2Add(bodies[i].velocity, Vector2Scale(bodies[i].acceleration, deltaTime));
-    //     bodies[i].acceleration = {0,0};
-    // }
+            bodies[i].acceleration = Vector2Add(bodies[i].acceleration, Vector2Scale(force, 1.0f/m1));
+            bodies[j].acceleration = Vector2Add(bodies[j].acceleration, Vector2Scale(force, -1.0f/bodies[j].mass));
+        }
+    }
 
     for (int i = 0; i < NUM_BODIES; i++) {
-        Vector2 totalForce = {0, 0};
-        for (int j = 0; j < NUM_BODIES; j++) {
-            if (i != j) {
-                Vector2 force = CalculateForce(bodies[i], bodies[j]);
-                totalForce = Vector2Add(totalForce, force);
-            }
-        }
-        Vector2 acceleration = Vector2Scale(totalForce, 1.0f / bodies[i].mass);
-        bodies[i].velocity = Vector2Add(bodies[i].velocity, Vector2Scale(acceleration, deltaTime));
+        bodies[i].velocity = Vector2Add(bodies[i].velocity, Vector2Scale(bodies[i].acceleration, deltaTime));
+        bodies[i].acceleration = {0,0};
     }
 
     for (int i = 0; i < NUM_BODIES; i++) {
