@@ -6,13 +6,14 @@
 class Simulation{
     public:
         Simulation();
-        void Run();
+        void Run(float deltaTime);
 
     private:
         Body bodies[NUM_BODIES];
 
         void Initialize();
         void DrawBodies();
-        void Simulate(float deltaTime);
+        void UpdateBodies(float deltaTime);
+        Vector2 CalculateForce(Body a, Body b);
         void Debug();
 };

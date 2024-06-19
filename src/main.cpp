@@ -10,10 +10,12 @@ int main()
 
     while (!WindowShouldClose())
     {
+        float deltaTime = GetFrameTime();
+        
         BeginDrawing();
         ClearBackground(backgroundColor);
 
-            sim.Run();
+            sim.Run(deltaTime*10);
 
         EndDrawing();
     }

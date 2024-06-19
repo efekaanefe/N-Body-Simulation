@@ -9,7 +9,7 @@ const Color backgroundColor = WHITE;
 const Color bodyColor = RED;
 
 // simulation
-const int NUM_BODIES = 3;
+const int NUM_BODIES = 100;
 const float G = 6.67430e-11;
 
 

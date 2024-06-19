@@ -4,13 +4,7 @@
 class Body
 {
 public:
-    Body();
+    // Body();
     float mass;
     Vector2 position, velocity;
-
-    void Update();
-    void Draw();
-
-private:
-
 };
