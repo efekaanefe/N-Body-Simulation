@@ -5,11 +5,11 @@ class Body
 {
 public:
     Body();
-    void Update();
-    void Draw();
-
     float mass;
     Vector2 position, velocity;
+
+    void Update();
+    void Draw();
 
 private:
 
