@@ -16,11 +16,11 @@ void Simulation::Initialize(){
 }
 
 void Simulation::Run(){
-
+    DrawBodies();
 }
 
 void Simulation::DrawBodies(){
     for (int i = 0; i < NUM_BODIES; i++) {
-        DrawCircleV(bodies[i].position, 5, RAYWHITE);
+        DrawCircleV(bodies[i].position, 5, bodyColor);
     }
 }

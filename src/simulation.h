@@ -7,9 +7,10 @@ class Simulation{
     public:
         Simulation();
         Body bodies[NUM_BODIES];
+        void Run();
 
     private:
         void Initialize();
-        void Run();
         void DrawBodies();
+        void Simulate(float deltaTime);
 };

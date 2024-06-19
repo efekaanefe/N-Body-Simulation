@@ -3,9 +3,10 @@
 #pragma once
 #include "raylib.h"
 
-const int screenWidth = 1600;
-const int screenHeight = 900;
-const Color backgroundColor = BLACK;
+const int screenWidth = 800;
+const int screenHeight = 600;
+const Color backgroundColor = WHITE;
+const Color bodyColor = RED;
 
 // simulation
 const int NUM_BODIES = 3;
