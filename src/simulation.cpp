@@ -3,8 +3,11 @@
 #include "math.h"
 #include "raymath.h"
 #include <stdio.h>
+#include "quadtree.h"
+#include "raylib.h" 
 
-Simulation::Simulation(){
+
+Simulation::Simulation(): quadTree(){
     Initialize();
 }
 
@@ -18,6 +21,8 @@ void Simulation::Initialize(){
         // bodies[i].mass = GetRandomValue(1, 100) * 10e10;
         bodies[i].mass = 1 * 10e10;
     }
+    
+    InitializeQuadtree(Rectangle {0, 0, screenWidth, screenHeight});
 }
 
 void Simulation::Run(float deltaTime){
@@ -35,7 +40,6 @@ void Simulation::DrawBodies(){
 
 void Simulation::UpdateBodies(float deltaTime){
 
-    // ---------    OPTIMIZATION     ---------
     for (int i = 0; i < NUM_BODIES; i++) {
         float m1 = bodies[i].mass;
         for (int j = i+1; j < NUM_BODIES; j++) {
@@ -49,9 +53,6 @@ void Simulation::UpdateBodies(float deltaTime){
     for (int i = 0; i < NUM_BODIES; i++) {
         bodies[i].velocity = Vector2Add(bodies[i].velocity, Vector2Scale(bodies[i].acceleration, deltaTime));
         bodies[i].acceleration = {0,0};
-    }
-
-    for (int i = 0; i < NUM_BODIES; i++) {
         bodies[i].position = Vector2Add(bodies[i].position, Vector2Scale(bodies[i].velocity, deltaTime));
     }
 }
@@ -69,7 +70,12 @@ Vector2 Simulation::CalculateForce(Body a, Body b) {
     return force;
 }
 
+void Simulation::InitializeQuadtree(const Rectangle& boundary) {
+    quadTree = new Quadtree(boundary);
+}
+
 void Simulation::Debug(){
+
     for (int i = 0; i < NUM_BODIES; i++) {
         printf("Body %d: Position = (%.2f, %.2f)\n", i, bodies[i].position.x, bodies[i].position.y);
         // printf("Body %d: Mass = (%.2f)\n", i, bodies[i].mass/5);

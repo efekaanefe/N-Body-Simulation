@@ -2,6 +2,7 @@
 #include <vector>
 #include "body.h"
 #include "constants.h"
+#include "quadtree.h"
 
 class Simulation{
     public:
@@ -16,4 +17,8 @@ class Simulation{
         void UpdateBodies(float deltaTime);
         Vector2 CalculateForce(Body a, Body b);
         void Debug();
+
+        Quadtree* quadTree;
+        void InitializeQuadtree(const Rectangle& boundary);
+
 };
