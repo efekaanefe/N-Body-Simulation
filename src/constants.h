@@ -13,4 +13,7 @@ const int NUM_BODIES = 2000;
 const float G = 6.67430e-11;
 const float MIN_DISTANCE = 0.01;
 
+// quadtree
+const int QT_NODE_CAPACITY = 4;
+
 #endif

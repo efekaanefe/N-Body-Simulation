@@ -21,7 +21,7 @@ void Simulation::Initialize(){
         // bodies[i].mass = GetRandomValue(1, 100) * 10e10;
         bodies[i].mass = 1 * 10e10;
     }
-    
+
     InitializeQuadtree(Rectangle {0, 0, screenWidth, screenHeight});
 }
 
@@ -70,8 +70,8 @@ Vector2 Simulation::CalculateForce(Body a, Body b) {
     return force;
 }
 
-void Simulation::InitializeQuadtree(const Rectangle& boundary) {
-    quadTree = new Quadtree(boundary);
+void Simulation::InitializeQuadtree(const Rectangle& boundary, int capacity) {
+    quadTree = new Quadtree(boundary, capacity);
 }
 
 void Simulation::Debug(){

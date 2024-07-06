@@ -19,6 +19,6 @@ class Simulation{
         void Debug();
 
         Quadtree* quadTree;
-        void InitializeQuadtree(const Rectangle& boundary);
+        void InitializeQuadtree(const Rectangle& boundary, int capacity);
 
 };
