@@ -7,7 +7,7 @@
 #include "raylib.h" 
 
 
-Simulation::Simulation(): quadTree(){
+Simulation::Simulation() {
     Initialize();
 }
 
@@ -22,7 +22,6 @@ void Simulation::Initialize(){
         bodies[i].mass = 1 * 10e10;
     }
 
-    InitializeQuadtree(Rectangle {0, 0, screenWidth, screenHeight});
 }
 
 void Simulation::Run(float deltaTime){
@@ -68,10 +67,6 @@ Vector2 Simulation::CalculateForce(Body a, Body b) {
     float strength = (G * a.mass * b.mass) / (distance * distance);
     force = Vector2Scale(difference, strength);
     return force;
-}
-
-void Simulation::InitializeQuadtree(const Rectangle& boundary, int capacity) {
-    quadTree = new Quadtree(boundary, capacity);
 }
 
 void Simulation::Debug(){

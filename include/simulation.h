@@ -18,7 +18,4 @@ class Simulation{
         Vector2 CalculateForce(Body a, Body b);
         void Debug();
 
-        Quadtree* quadTree;
-        void InitializeQuadtree(const Rectangle& boundary, int capacity);
-
 };

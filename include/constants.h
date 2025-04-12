@@ -9,7 +9,7 @@ const Color backgroundColor = BLACK;
 const Color bodyColor = WHITE;
 
 // simulation
-const int NUM_BODIES = 2000;
+const int NUM_BODIES = 200;
 const float G = 6.67430e-11;
 const float MIN_DISTANCE = 0.01;
 
