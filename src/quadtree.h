@@ -37,8 +37,8 @@ class Quadtree {
     float totalMass;
 
     // children
-    Quadtree* northWest;
-    Quadtree* northEast;
-    Quadtree* southWest;
-    Quadtree* southEast;
+    Quadtree *northWest;
+    Quadtree *northEast;
+    Quadtree *southWest;
+    Quadtree *southEast;
 };

@@ -3,6 +3,7 @@
 #include "constants.h"
 #include <cctype>
 #include <cmath>
+#include <cstdio>
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
@@ -90,56 +91,60 @@ void Quadtree::Subdivide() {
 }
 
 Vector2 Quadtree::CalculateForce(Body body, float theta) {
-
-    if (totalMass == 0)
+    if (totalMass == 0) {
         return {0, 0};
+    }
 
     Vector2 force = {0, 0};
-    float distance = Vector2Distance(body.position, centerOfMass);
+    float dx = centerOfMass.x - body.position.x;
+    float dy = centerOfMass.y - body.position.y;
+    float distance = sqrt(dx * dx + dy * dy);
+    float softenedDistance = sqrt((distance + epsilon) * (distance + epsilon));
 
     // If this is a leaf node with a single body that is not our target body
     if (!isDivided && bodies.size() == 1 && bodies[0] != body) {
-        // Calculate direct force using Newton's law of gravity
-        if (distance > 0) {
+        float dx_leaf = bodies[0].position.x - body.position.x;
+        float dy_leaf = bodies[0].position.y - body.position.y;
+        float distance_leaf = sqrt(dx_leaf * dx_leaf + dy_leaf * dy_leaf);
+        float softenedDistance_leaf =
+            sqrt((distance_leaf + epsilon) * (distance_leaf + epsilon));
+
+        /*printf("Distance: %f \n", distance_leaf);*/
+
+        if (distance_leaf > MIN_DISTANCE) {
             float forceMagnitude =
-                G * body.mass * bodies[0].mass / (distance * distance);
-            Vector2 direction =
-                Vector2Normalize({bodies[0].position.x - body.position.x,
-                                  bodies[0].position.y - body.position.y});
+                G * body.mass * bodies[0].mass /
+                (softenedDistance_leaf * softenedDistance_leaf);
+            Vector2 direction = Vector2Normalize({dx_leaf, dy_leaf});
             force.x = direction.x * forceMagnitude;
             force.y = direction.y * forceMagnitude;
         }
         return force;
     }
 
-    // Calculate s/d ratio (size of region / distance to center of mass)
     float s = sqrt(boundary.width * boundary.height);
     float ratio = s / distance;
 
-    // If ratio is small enough (Barnes-Hut approximation criterion)
     if (!isDivided || ratio < theta) {
-        if (distance > 0) {
-            float forceMagnitude =
-                G * body.mass * totalMass / (distance * distance);
-            Vector2 direction =
-                Vector2Normalize({centerOfMass.x - body.position.x,
-                                  centerOfMass.x - body.position.y});
+        if (distance > MIN_DISTANCE) {
+            float forceMagnitude = G * body.mass * totalMass /
+                                   (softenedDistance * softenedDistance);
+            Vector2 direction = Vector2Normalize({dx, dy});
             force.x = direction.x * forceMagnitude;
             force.y = direction.y * forceMagnitude;
-        } else {
-            // Node is too close, so recurse to children
-            if (isDivided) {
-                Vector2 nwForce = northWest->CalculateForce(body, theta);
-                Vector2 neForce = northEast->CalculateForce(body, theta);
-                Vector2 swForce = southWest->CalculateForce(body, theta);
-                Vector2 seForce = southEast->CalculateForce(body, theta);
-
-                force.x = nwForce.x + neForce.x + swForce.x + seForce.x;
-                force.y = nwForce.y + neForce.y + swForce.y + seForce.y;
-            }
         }
-        return force;
+    } else {
+        // recurse into children...
+        if (isDivided) {
+            Vector2 nwForce = northWest->CalculateForce(body, theta);
+            Vector2 neForce = northEast->CalculateForce(body, theta);
+            Vector2 swForce = southWest->CalculateForce(body, theta);
+            Vector2 seForce = southEast->CalculateForce(body, theta);
+            force.x = nwForce.x + neForce.x + swForce.x + seForce.x;
+            force.y = nwForce.y + neForce.y + swForce.y + seForce.y;
+        }
     }
+    return force;
 }
 
 void Quadtree::Clear() {

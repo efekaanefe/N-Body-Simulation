@@ -4,7 +4,7 @@ N body simulation in 2D using raylib/cpp
 
 ### TODOs
 
-- [ ] Quadtree
+- [x] Quadtree
 - [ ] GPU
 - [ ] 3D
 
