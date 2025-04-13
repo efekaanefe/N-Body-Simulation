@@ -37,52 +37,49 @@ void Simulation::DrawBodies() {
 
 void Simulation::UpdateBodies(float deltaTime) {
 
-    /*quadtree.Clear();*/
+    quadtree.Clear();
 
     for (Body &body : bodies) {
-        /*quadtree.Insert(body);*/
+        quadtree.Insert(body);
     }
 
-    for (Body &body : bodies) {
-    }
+    quadtree.Draw();
 
-    /*for (int i = 0; i < NUM_BODIES; i++) {*/
-    /*  float m1 = bodies[i].mass;*/
-    /*  for (int j = i + 1; j < NUM_BODIES; j++) {*/
-    /*    Vector2 force = CalculateForce(bodies[i], bodies[j]);*/
-    /**/
-    /*    bodies[i].acceleration =*/
-    /*        Vector2Add(bodies[i].acceleration, Vector2Scale(force, 1.0f /
-     * m1));*/
-    /*    bodies[j].acceleration = Vector2Add(*/
-    /*        bodies[j].acceleration, Vector2Scale(force, -1.0f /
-     * bodies[j].mass));*/
-    /*  }*/
-    /*}*/
-    /**/
-    /*for (int i = 0; i < NUM_BODIES; i++) {*/
-    /*  bodies[i].velocity = Vector2Add(*/
-    /*      bodies[i].velocity, Vector2Scale(bodies[i].acceleration,
-     * deltaTime));*/
-    /*  bodies[i].acceleration = {0, 0};*/
-    /*  bodies[i].position = Vector2Add(*/
-    /*      bodies[i].position, Vector2Scale(bodies[i].velocity, deltaTime));*/
+        /*// Calculate forces on each body using Barnes-Hut approximation*/
+        /*for (Body &body : bodies) {*/
+        /*Vector2 force =*/
+        /*    quadtree.CalculateForce(body, 0.5f); // theta = 0.5 is common*/
+        /**/
+        /*printf("Vector2: x = %f, y = %f\n", force.x, force.y);*/
+        /**/
+        /*    // Apply force to calculate acceleration*/
+        /*    Vector2 acceleration = {force.x / body.mass, force.y /
+         * body.mass};*/
+        /**/
+        /*    // Update velocity (integrate acceleration)*/
+        /*    body.velocity.x += acceleration.x * deltaTime;*/
+        /*    body.velocity.y += acceleration.y * deltaTime;*/
+        /*}*/
+        /*// Update positions*/
+        /*for (Body& body : bodies) {*/
+        /*    body.position.x += body.velocity.x * deltaTime;*/
+        /*    body.position.y += body.velocity.y * deltaTime;*/
     /*}*/
 }
 
-Vector2 Simulation::CalculateForce(Body a, Body b) {
-    Vector2 force = {0, 0};
-    Vector2 difference = Vector2Subtract(b.position, a.position);
-    float distance = Vector2Length(difference);
-    if (distance <= MIN_DISTANCE) {
-        distance = MIN_DISTANCE;
-    }
-    if (distance == 0)
-        return force; // Avoid division by zero
-    float strength = (G * a.mass * b.mass) / (distance * distance);
-    force = Vector2Scale(difference, strength);
-    return force;
-}
+/*Vector2 Simulation::CalculateForce(Body a, Body b) {*/
+/*    Vector2 force = {0, 0};*/
+/*    Vector2 difference = Vector2Subtract(b.position, a.position);*/
+/*    float distance = Vector2Length(difference);*/
+/*    if (distance <= MIN_DISTANCE) {*/
+/*        distance = MIN_DISTANCE;*/
+/*    }*/
+/*    if (distance == 0)*/
+/*        return force; // Avoid division by zero*/
+/*    float strength = (G * a.mass * b.mass) / (distance * distance);*/
+/*    force = Vector2Scale(difference, strength);*/
+/*    return force;*/
+/*}*/
 
 void Simulation::Debug() {
 

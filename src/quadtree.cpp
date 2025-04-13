@@ -7,10 +7,10 @@
 #include <raymath.h>
 #include <vector>
 
-Quadtree::Quadtree(Rectangle boundary){
+Quadtree::Quadtree(Rectangle boundary) {
     this->boundary = boundary;
     this->bodies.clear();
-	this->capacity = QT_NODE_CAPACITY;
+    this->capacity = QT_NODE_CAPACITY;
     this->isDivided = false;
     this->centerOfMass = {0, 0};
     this->totalMass = 0;
@@ -31,7 +31,8 @@ void Quadtree::Insert(Body body) {
     Vector2 weightedPosition = {
         centerOfMass.x * totalMass + body.position.x * body.mass,
         centerOfMass.y * totalMass + body.position.y * body.mass,
-    } totalMass += body.mass;
+    };
+    totalMass += body.mass;
 
     if (totalMass > 0) {
         centerOfMass.x = weightedPosition.x / totalMass;
@@ -105,8 +106,8 @@ Vector2 Quadtree::CalculateForce(Body body, float theta) {
             Vector2 direction =
                 Vector2Normalize({bodies[0].position.x - body.position.x,
                                   bodies[0].position.y - body.position.y});
-            force.x = direction.x * forceMagnitude.x;
-            force.y = direction.y * forceMagnitude.y;
+            force.x = direction.x * forceMagnitude;
+            force.y = direction.y * forceMagnitude;
         }
         return force;
     }
