@@ -12,7 +12,6 @@ const Color quadtreeColor = GRAY;
 const int NUM_BODIES = 10000;
 const float G = 6.67430e-11;
 const float MIN_DISTANCE = 200.0f;
-const float epsilon = 1e-2f;
 
 // quadtree
 const int QT_NODE_CAPACITY = 100;

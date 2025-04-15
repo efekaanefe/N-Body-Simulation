@@ -57,10 +57,10 @@ void Quadtree::Insert(Body body) {
 }
 
 void Quadtree::Subdivide() {
-    int x = this->boundary.x;
-    int y = this->boundary.y;
-    int w = this->boundary.width;
-    int h = this->boundary.height;
+    float x = this->boundary.x;
+    float y = this->boundary.y;
+    float w = this->boundary.width;
+    float h = this->boundary.height;
 
     // Use half width and height
     float halfW = w / 2.0f;
@@ -99,28 +99,6 @@ Vector2 Quadtree::CalculateForce(Body body, float theta) {
     float dx = centerOfMass.x - body.position.x;
     float dy = centerOfMass.y - body.position.y;
     float distance = sqrt(dx * dx + dy * dy);
-    float softenedDistance = sqrt((distance + epsilon) * (distance + epsilon));
-
-    // If this is a leaf node with a single body that is not our target body
-    if (!isDivided && bodies.size() == 1 && bodies[0] != body) {
-        float dx_leaf = bodies[0].position.x - body.position.x;
-        float dy_leaf = bodies[0].position.y - body.position.y;
-        float distance_leaf = sqrt(dx_leaf * dx_leaf + dy_leaf * dy_leaf);
-        float softenedDistance_leaf =
-            sqrt((distance_leaf + epsilon) * (distance_leaf + epsilon));
-
-        /*printf("Distance: %f \n", distance_leaf);*/
-
-        if (distance_leaf > MIN_DISTANCE) {
-            float forceMagnitude =
-                G * body.mass * bodies[0].mass /
-                (softenedDistance_leaf * softenedDistance_leaf);
-            Vector2 direction = Vector2Normalize({dx_leaf, dy_leaf});
-            force.x = direction.x * forceMagnitude;
-            force.y = direction.y * forceMagnitude;
-        }
-        return force;
-    }
 
     float s = sqrt(boundary.width * boundary.height);
     float ratio = s / distance;
@@ -128,7 +106,7 @@ Vector2 Quadtree::CalculateForce(Body body, float theta) {
     if (!isDivided || ratio < theta) {
         if (distance > MIN_DISTANCE) {
             float forceMagnitude = G * body.mass * totalMass /
-                                   (softenedDistance * softenedDistance);
+                                   (distance * distance);
             Vector2 direction = Vector2Normalize({dx, dy});
             force.x = direction.x * forceMagnitude;
             force.y = direction.y * forceMagnitude;

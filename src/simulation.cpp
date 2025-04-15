@@ -4,7 +4,7 @@
 #include "math.h"
 #include "quadtree.h"
 #include "raylib.h"
-#include "raymath.h"
+/*#include "raymath.h"*/
 #include <stdio.h>
 
 Simulation::Simulation()
