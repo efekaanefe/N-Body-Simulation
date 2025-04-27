@@ -9,7 +9,7 @@ const Color backgroundColor = BLACK;
 const Color bodyColor = WHITE;
 const Color quadtreeColor = GRAY;
 // simulation
-const int NUM_BODIES = 10000;
+const int NUM_BODIES = 50000;
 const float G = 6.67430e-11;
 const float MIN_DISTANCE = 200.0f;
 

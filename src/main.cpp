@@ -1,6 +1,7 @@
 #include "simulation.h"
 #include <raylib.h>
 
+
 int main() {
     InitWindow(screenWidth, screenHeight, "2D N-Body Simulation");
     // SetTargetFPS(75);

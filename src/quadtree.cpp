@@ -8,6 +8,7 @@
 #include <raymath.h>
 #include <vector>
 
+
 Quadtree::Quadtree(Rectangle boundary) {
     this->boundary = boundary;
     this->bodies.clear();
